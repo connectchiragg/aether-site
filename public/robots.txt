@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aether.haciensus.com/sitemap.xml
