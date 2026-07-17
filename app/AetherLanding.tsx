@@ -4,7 +4,6 @@ import { useState } from "react";
 import { EyeCanvas } from "./EyeCanvas";
 
 const installCommands = [
-  "brew tap connectchiragg/tap",
   "brew trust --formula connectchiragg/tap/aether",
   "brew install connectchiragg/tap/aether",
   "aether watch",
