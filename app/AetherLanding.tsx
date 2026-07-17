@@ -3,7 +3,13 @@
 import { useState } from "react";
 import { EyeCanvas } from "./EyeCanvas";
 
-const installCommand = "brew install connectchiragg/tap/aether";
+const installCommands = [
+  "brew tap connectchiragg/tap",
+  "brew trust --formula connectchiragg/tap/aether",
+  "brew install connectchiragg/tap/aether",
+  "aether watch",
+];
+const installCommand = installCommands.join("\n");
 
 const signals = [
   ["Context", "See how much of the model window is occupied, including real compaction resets.", "WINDOW / LIVE"],
@@ -60,7 +66,7 @@ export function AetherLanding() {
       <section id="top" className="hero section-shell">
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow"><span>00</span><i /> Local observability / v0.6.0</p>
+            <p className="eyebrow"><span>00</span><i /> Local observability / v0.7.0</p>
             <h1><span>Aether.</span> See the<br />invisible.</h1>
             <p className="hero-lede">
               Local, live observability for <strong>Claude Code</strong> and <strong>Codex</strong>.
@@ -184,14 +190,19 @@ export function AetherLanding() {
       <section id="install" className="install-section section-shell section-rule">
         <div className="section-heading section-heading--center">
           <p className="eyebrow"><span>05</span><i /> Install</p>
-          <h2>Three commands.<br /><em>Then watch.</em></h2>
-          <p>macOS and Linux · MIT licensed · built in Rust</p>
+          <h2>Trust. Install.<br /><em>Then watch.</em></h2>
+          <p>Homebrew 6 formula trust · automatic provider discovery · macOS and Linux</p>
         </div>
         <div className="terminal-install">
           <div className="terminal-title"><span>AETHER SETUP</span><span>LOCAL SHELL</span></div>
-          <div className="command-row"><span className="prompt">$</span><code>{installCommand}</code><button onClick={copyInstall} aria-label="Copy Homebrew install command">{copied ? "Copied" : "Copy"}</button></div>
-          <div className="command-row"><span className="prompt">$</span><code>aether setup claude &amp;&amp; aether setup codex</code></div>
-          <div className="command-row"><span className="prompt">$</span><code>aether watch</code><span className="command-status"><i className="live-dot" /> live</span></div>
+          {installCommands.map((command, index) => (
+            <div className="command-row" key={command}>
+              <span className="prompt">$</span>
+              <code>{command}</code>
+              {index === 0 && <button onClick={copyInstall} aria-label="Copy all Homebrew install commands">{copied ? "Copied all" : "Copy all"}</button>}
+              {index === installCommands.length - 1 && <span className="command-status"><i className="live-dot" /> auto-discovery live</span>}
+            </div>
+          ))}
         </div>
         <div className="install-alternatives">
           <a href="https://raw.githubusercontent.com/connectchiragg/aether/master/install.sh">Shell installer ↗</a>

@@ -63,12 +63,21 @@ export function EyeCanvas() {
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.05;
 
-        scene.add(new THREE.HemisphereLight(0xe9e2d4, 0x0a0807, 1.6));
-        const rustLight = new THREE.DirectionalLight(0xae2620, 7);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        scene.add(new THREE.HemisphereLight(0xe9e2d4, 0x0a0807, 0.9));
+        const rustLight = new THREE.DirectionalLight(0xae2620, 5.5);
         rustLight.position.set(-4, 3, 4);
+        rustLight.castShadow = true;
+        rustLight.shadow.mapSize.set(1024, 1024);
+        rustLight.shadow.normalBias = 0.018;
         scene.add(rustLight);
-        const amberLight = new THREE.DirectionalLight(0xde3c2f, 4.5);
+        const amberLight = new THREE.DirectionalLight(0xde3c2f, 3.2);
         amberLight.position.set(4, -1, 3);
+        amberLight.castShadow = true;
+        amberLight.shadow.mapSize.set(1024, 1024);
+        amberLight.shadow.normalBias = 0.018;
         scene.add(amberLight);
 
         const loader = new loaderModule.GLTFLoader();
@@ -98,6 +107,10 @@ export function EyeCanvas() {
         const pulseMaterials: Array<{ material: import("three").MeshStandardMaterial; base: number }> = [];
         eye.traverse((object) => {
           const mesh = object as import("three").Mesh;
+          if (mesh.isMesh) {
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+          }
           const materials = Array.isArray(mesh.material) ? mesh.material : mesh.material ? [mesh.material] : [];
           materials.forEach((candidate) => {
             if (

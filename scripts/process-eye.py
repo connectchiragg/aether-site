@@ -75,6 +75,27 @@ def tune_original_material(
     return mat
 
 
+def thin_eye_bands(objects: list[bpy.types.Object], ratio: float = 0.62) -> None:
+    """Narrow the original horizontal Glow face regions without flattening the eye discs."""
+    for obj in objects:
+        if obj.type != "MESH" or obj.name not in {"1", "1.001", "1.0110"}:
+            continue
+        glow_indices = {
+            index
+            for index, slot in enumerate(obj.data.materials)
+            if slot and slot.name == "Aether Signal Glow"
+        }
+        band_vertices = {
+            vertex_index
+            for polygon in obj.data.polygons
+            if polygon.material_index in glow_indices
+            for vertex_index in polygon.vertices
+        }
+        for vertex_index in band_vertices:
+            obj.data.vertices[vertex_index].co.y *= ratio
+        obj.data.update()
+
+
 def prepare_scene() -> list[bpy.types.Object]:
     # The archive bundles the original environment image at a different path
     # from the artist's machine. Relink it before removing the web-unneeded
@@ -119,12 +140,13 @@ def prepare_scene() -> list[bpy.types.Object]:
     tune_original_material(
         "Glow",
         "Aether Signal Glow",
-        "#DE3C2F",
-        metallic=0.0,
-        roughness=0.48,
+        "#7D1512",
+        metallic=0.24,
+        roughness=0.38,
         emission="#DE3C2F",
-        strength=8.0,
+        strength=2.8,
     )
+    thin_eye_bands(selected)
 
     for obj in selected:
         if obj.type != "MESH":
@@ -199,7 +221,7 @@ def render_poster(output: Path) -> None:
 
     add_light("Primary Red Rim", "AREA", "#ae2620", 1150, (-8, -7, 28), 8)
     add_light("Signal Red Key", "AREA", "#de3c2f", 1050, (10, -10, 24), 7)
-    add_light("Bone Fill", "AREA", "#e9e2d4", 520, (2, 8, 18), 9)
+    add_light("Bone Fill", "AREA", "#e9e2d4", 300, (2, 8, 18), 9)
 
     world = scene.world or bpy.data.worlds.new("Aether World")
     scene.world = world

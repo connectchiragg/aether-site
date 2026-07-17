@@ -25,6 +25,10 @@ test("server renders Aether's readable first response", async () => {
   assert.match(html, /See the invisible/);
   assert.match(html, /View product tour/);
   assert.match(html, /Install with Homebrew/);
+  assert.match(html, /brew tap connectchiragg\/tap/);
+  assert.match(html, /brew trust --formula connectchiragg\/tap\/aether/);
+  assert.match(html, /aether watch/);
+  assert.doesNotMatch(html, /aether setup/);
   assert.match(html, /id="tour"/);
   assert.match(html, /id="signals"/);
   assert.match(html, /id="how-it-works"/);
