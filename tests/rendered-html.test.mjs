@@ -23,7 +23,7 @@ test("server renders Aether's readable first response", async () => {
   const html = await response.text();
   assert.match(html, /Aether — See the invisible/);
   assert.match(html, /See the invisible/);
-  assert.match(html, /Watch product tour/);
+  assert.match(html, /View product tour/);
   assert.match(html, /Install with Homebrew/);
   assert.match(html, /id="tour"/);
   assert.match(html, /id="signals"/);
@@ -36,6 +36,9 @@ test("heavy assets are deferred from the initial document", async () => {
   const response = await render();
   const html = await response.text();
   assert.match(html, /preload="metadata"/);
+  assert.match(html, /autoPlay|autoplay/);
+  assert.match(html, /loop=""/);
+  assert.match(html, /muted=""/);
   assert.match(html, /loading="lazy"/);
   assert.doesNotMatch(html, /<link[^>]+(?:all-seeing-eye\.glb|aether-demo-v0\.6\.0\.mp4)/i);
 });

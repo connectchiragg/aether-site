@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { EyeCanvas } from "./EyeCanvas";
 
 const installCommand = "brew install connectchiragg/tap/aether";
@@ -16,33 +16,12 @@ const signals = [
   ["Actions", "Inspect tools, patches, searches, compactions, outcomes, and model metadata.", "EVENT / STREAM"],
 ];
 
-function AetherMark() {
-  return (
-    <span className="wordmark-mark" aria-hidden="true">
-      <span>⠑⠽⠑</span>
-    </span>
-  );
-}
-
 export function AetherLanding() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
-  const [tourPlaying, setTourPlaying] = useState(false);
 
-  const playTour = () => {
+  const showTour = () => {
     const tour = document.getElementById("tour");
     tour?.scrollIntoView({ behavior: "smooth", block: "center" });
-    window.setTimeout(() => videoRef.current?.play().catch(() => undefined), 650);
-  };
-
-  const toggleTour = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.paused) {
-      video.play().catch(() => undefined);
-    } else {
-      video.pause();
-    }
   };
 
   const copyInstall = async () => {
@@ -67,7 +46,7 @@ export function AetherLanding() {
     <main>
       <header className="site-nav">
         <a className="wordmark" href="#top" aria-label="Aether home">
-          <AetherMark />
+          <span className="wordmark-dot" aria-hidden="true" />
           <span>aether</span>
         </a>
         <nav aria-label="Primary navigation">
@@ -88,7 +67,7 @@ export function AetherLanding() {
               Follow context, cost, complexity, code changes, tools, compactions, and sub-agents—without sending your data anywhere.
             </p>
             <div className="hero-actions">
-              <button className="primary-button" onClick={playTour}><span>▶</span> Watch product tour</button>
+              <button className="primary-button" onClick={showTour}><span>↓</span> View product tour</button>
               <a className="secondary-button" href="#install"><span>$</span> Install with Homebrew</a>
             </div>
             <div className="hero-proof" aria-label="Aether privacy summary">
@@ -105,23 +84,22 @@ export function AetherLanding() {
       </section>
 
       <section id="tour" className="tour-section section-shell section-rule">
-        <div className={`tour-stage${tourPlaying ? " tour-stage--playing" : ""}`}>
+        <div className="tour-stage">
           <video
-            ref={videoRef}
+            autoPlay
+            loop
+            muted
             playsInline
             preload="metadata"
             poster="/media/tour-poster.jpg"
-            aria-label="39-second Aether product tour"
-            onPlay={() => setTourPlaying(true)}
-            onPause={() => setTourPlaying(false)}
-            onEnded={() => setTourPlaying(false)}
+            aria-label="Looping 39-second Aether product tour"
           >
             <source src="/media/aether-demo-v0.6.0.mp4" type="video/mp4" />
             Your browser does not support the product tour video.
           </video>
           <div className="tour-stage-top">
             <span><i className="frame-live" /> AETHER / SESSION 7F–A2</span>
-            <span>39 SEC · SILENT · LOCAL</span>
+            <span>39 SEC · LOOP · SILENT · LOCAL</span>
           </div>
           <div className="tour-stage-copy">
             <div>
@@ -129,16 +107,6 @@ export function AetherLanding() {
               <h2>One session.<br /><em>Every signal aligned.</em></h2>
               <p>Move once and context, duration, cost, tokens, complexity, and code impact stay synchronized across the same turns.</p>
             </div>
-            <button
-              className="tour-control"
-              type="button"
-              onClick={toggleTour}
-              aria-pressed={tourPlaying}
-              aria-label={tourPlaying ? "Pause product tour" : "Play product tour"}
-            >
-              <span>{tourPlaying ? "Ⅱ" : "▶"}</span>
-              {tourPlaying ? "Pause" : "Play"} tour
-            </button>
           </div>
         </div>
       </section>
@@ -241,7 +209,7 @@ export function AetherLanding() {
       </section>
 
       <footer className="site-footer section-shell">
-        <div className="footer-main"><a className="wordmark" href="#top" aria-label="Aether home"><AetherMark /><span>aether</span></a><p>Local, live observability for coding agents.</p><a href="#top">Back to signal ↑</a></div>
+        <div className="footer-main"><a className="wordmark" href="#top" aria-label="Aether home"><span className="wordmark-dot" aria-hidden="true" /><span>aether</span></a><p>Local, live observability for coding agents.</p><a href="#top">Back to signal ↑</a></div>
         <div className="footer-meta"><span>© 2026 Chirag Goel · MIT</span><span>Built for macOS + Linux</span></div>
         <p className="attribution">
           3D model <a href="https://sketchfab.com/3d-models/the-all-seeing-eye-eba076cbdee94f2f9d399d95267f6ade" target="_blank" rel="noreferrer">“The All Seeing Eye”</a> by <a href="https://sketchfab.com/TheWarVet" target="_blank" rel="noreferrer">The WarVet</a>, modified for Aether, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>. No endorsement implied.
