@@ -64,10 +64,10 @@ export function EyeCanvas() {
         renderer.toneMappingExposure = 1.05;
 
         scene.add(new THREE.HemisphereLight(0xe9e2d4, 0x0a0807, 1.6));
-        const rustLight = new THREE.DirectionalLight(0xcf3f32, 7);
+        const rustLight = new THREE.DirectionalLight(0xae2620, 7);
         rustLight.position.set(-4, 3, 4);
         scene.add(rustLight);
-        const amberLight = new THREE.DirectionalLight(0xe5b94b, 5);
+        const amberLight = new THREE.DirectionalLight(0xde3c2f, 4.5);
         amberLight.position.set(4, -1, 3);
         scene.add(amberLight);
 
@@ -102,7 +102,7 @@ export function EyeCanvas() {
           materials.forEach((candidate) => {
             if (
               candidate instanceof THREE.MeshStandardMaterial &&
-              /signal|ember/i.test(candidate.name)
+              /signal|glow/i.test(candidate.name)
             ) {
               pulseMaterials.push({ material: candidate, base: candidate.emissiveIntensity });
             }

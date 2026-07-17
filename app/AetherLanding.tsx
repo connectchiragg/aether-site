@@ -16,6 +16,14 @@ const signals = [
   ["Actions", "Inspect tools, patches, searches, compactions, outcomes, and model metadata.", "EVENT / STREAM"],
 ];
 
+function AetherMark() {
+  return (
+    <span className="wordmark-mark" aria-hidden="true">
+      <span>⠑⠽⠑</span>
+    </span>
+  );
+}
+
 export function AetherLanding() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
@@ -59,7 +67,7 @@ export function AetherLanding() {
     <main>
       <header className="site-nav">
         <a className="wordmark" href="#top" aria-label="Aether home">
-          <span className="wordmark-mark">æ</span>
+          <AetherMark />
           <span>aether</span>
         </a>
         <nav aria-label="Primary navigation">
@@ -233,7 +241,7 @@ export function AetherLanding() {
       </section>
 
       <footer className="site-footer section-shell">
-        <div className="footer-main"><a className="wordmark" href="#top"><span className="wordmark-mark">æ</span><span>aether</span></a><p>Local, live observability for coding agents.</p><a href="#top">Back to signal ↑</a></div>
+        <div className="footer-main"><a className="wordmark" href="#top" aria-label="Aether home"><AetherMark /><span>aether</span></a><p>Local, live observability for coding agents.</p><a href="#top">Back to signal ↑</a></div>
         <div className="footer-meta"><span>© 2026 Chirag Goel · MIT</span><span>Built for macOS + Linux</span></div>
         <p className="attribution">
           3D model <a href="https://sketchfab.com/3d-models/the-all-seeing-eye-eba076cbdee94f2f9d399d95267f6ade" target="_blank" rel="noreferrer">“The All Seeing Eye”</a> by <a href="https://sketchfab.com/TheWarVet" target="_blank" rel="noreferrer">The WarVet</a>, modified for Aether, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>. No endorsement implied.
