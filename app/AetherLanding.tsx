@@ -19,6 +19,7 @@ const signals = [
 export function AetherLanding() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [copied, setCopied] = useState(false);
+  const [tourPlaying, setTourPlaying] = useState(false);
 
   const playTour = () => {
     const tour = document.getElementById("tour");
@@ -26,14 +27,32 @@ export function AetherLanding() {
     window.setTimeout(() => videoRef.current?.play().catch(() => undefined), 650);
   };
 
+  const toggleTour = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play().catch(() => undefined);
+    } else {
+      video.pause();
+    }
+  };
+
   const copyInstall = async () => {
     try {
       await navigator.clipboard.writeText(installCommand);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
     } catch {
-      window.prompt("Copy the Homebrew command:", installCommand);
+      const field = document.createElement("textarea");
+      field.value = installCommand;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand("copy");
+      field.remove();
     }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
   };
 
   return (
@@ -78,20 +97,41 @@ export function AetherLanding() {
       </section>
 
       <section id="tour" className="tour-section section-shell section-rule">
-        <div className="section-heading">
-          <p className="eyebrow"><span>01</span><i /> Product tour</p>
-          <h2>One session.<br /><em>Every signal aligned.</em></h2>
-          <p>Move once and context, duration, cost, tokens, complexity, and code impact stay synchronized across the same turns.</p>
-        </div>
-        <div className="tour-frame">
-          <div className="frame-bar">
-            <span><i className="frame-live" /> AETHER / SESSION 7F–A2</span>
-            <span>46 SEC · SILENT · LOCAL</span>
-          </div>
-          <video ref={videoRef} controls playsInline preload="metadata" poster="/media/tour-poster.jpg" aria-label="46-second Aether product tour">
+        <div className={`tour-stage${tourPlaying ? " tour-stage--playing" : ""}`}>
+          <video
+            ref={videoRef}
+            playsInline
+            preload="metadata"
+            poster="/media/tour-poster.jpg"
+            aria-label="39-second Aether product tour"
+            onPlay={() => setTourPlaying(true)}
+            onPause={() => setTourPlaying(false)}
+            onEnded={() => setTourPlaying(false)}
+          >
             <source src="/media/aether-demo-v0.6.0.mp4" type="video/mp4" />
             Your browser does not support the product tour video.
           </video>
+          <div className="tour-stage-top">
+            <span><i className="frame-live" /> AETHER / SESSION 7F–A2</span>
+            <span>39 SEC · SILENT · LOCAL</span>
+          </div>
+          <div className="tour-stage-copy">
+            <div>
+              <p className="eyebrow"><span>01</span><i /> Product tour</p>
+              <h2>One session.<br /><em>Every signal aligned.</em></h2>
+              <p>Move once and context, duration, cost, tokens, complexity, and code impact stay synchronized across the same turns.</p>
+            </div>
+            <button
+              className="tour-control"
+              type="button"
+              onClick={toggleTour}
+              aria-pressed={tourPlaying}
+              aria-label={tourPlaying ? "Pause product tour" : "Play product tour"}
+            >
+              <span>{tourPlaying ? "Ⅱ" : "▶"}</span>
+              {tourPlaying ? "Pause" : "Play"} tour
+            </button>
+          </div>
         </div>
       </section>
 

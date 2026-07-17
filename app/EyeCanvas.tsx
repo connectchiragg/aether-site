@@ -50,7 +50,7 @@ export function EyeCanvas() {
         setState("loading");
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
-        camera.position.set(0, 0.05, 5.2);
+        camera.position.set(0, 0.05, 5.45);
 
         renderer = new THREE.WebGLRenderer({
           canvas,
@@ -111,11 +111,15 @@ export function EyeCanvas() {
         const bounds = new THREE.Box3().setFromObject(eye);
         const size = bounds.getSize(new THREE.Vector3());
         const center = bounds.getCenter(new THREE.Vector3());
-        const scale = 3.35 / Math.max(size.x, size.y, size.z);
-        eye.scale.setScalar(scale);
-        eye.position.copy(center.multiplyScalar(-scale));
-        eye.rotation.set(-0.08, -0.55, -0.04);
-        scene.add(eye);
+        const scale = 3.05 / Math.max(size.x, size.y, size.z);
+        eye.position.copy(center).multiplyScalar(-1);
+        const eyeRig = new THREE.Group();
+        eyeRig.add(eye);
+        eyeRig.scale.setScalar(scale);
+        eyeRig.position.x = -0.18;
+        eyeRig.rotation.set(-0.08, -0.55, -0.04);
+        const basePosition = eyeRig.position.clone();
+        scene.add(eyeRig);
         setState("live");
 
         const resize = () => {
@@ -159,10 +163,10 @@ export function EyeCanvas() {
           if (disposed) return;
           if (active && visible && renderer) {
             const time = (now - start) / 1000;
-            eye.rotation.y += (pointer.x * 0.18 + Math.sin(time * 0.28) * 0.16 - eye.rotation.y) * 0.025;
-            eye.rotation.x += (-pointer.y * 0.1 - 0.05 - eye.rotation.x) * 0.025;
-            eye.position.y = Math.sin(time * 0.65) * 0.055;
-            camera.position.z += (5.2 + scrollProgress * 0.7 - camera.position.z) * 0.035;
+            eyeRig.rotation.y += (pointer.x * 0.18 + Math.sin(time * 0.28) * 0.16 - eyeRig.rotation.y) * 0.025;
+            eyeRig.rotation.x += (-pointer.y * 0.1 - 0.05 - eyeRig.rotation.x) * 0.025;
+            eyeRig.position.y = basePosition.y + Math.sin(time * 0.65) * 0.055;
+            camera.position.z += (5.45 + scrollProgress * 0.7 - camera.position.z) * 0.035;
             camera.position.y += (scrollProgress * 0.18 - camera.position.y) * 0.035;
             pulseMaterials.forEach(({ material, base }, index) => {
               material.emissiveIntensity = base * (0.82 + Math.sin(time * 1.2 + index * 0.7) * 0.18);
