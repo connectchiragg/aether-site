@@ -2,11 +2,15 @@ import assert from "node:assert/strict";
 import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
-test("static Pages build includes Aether metadata and root mount", async () => {
+test("static Pages build includes search metadata and prerendered product copy", async () => {
   const html = await readFile(new URL("../pages-dist/index.html", import.meta.url), "utf8");
-  assert.match(html, /Aether — See the invisible/);
+  assert.match(html, /Aether: Claude Code &amp; Codex Observability TUI/);
   assert.match(html, /aether\.haciensus\.com/);
-  assert.match(html, /id="root"/);
+  assert.match(html, /application\/ld\+json/);
+  assert.match(html, /"@type": "SoftwareApplication"/);
+  assert.match(html, /id="root">[\s\S]*?<main>/);
+  assert.match(html, /View product tour/);
+  assert.match(html, /Star on GitHub/);
 });
 
 test("critical media and 3D assets are present", async () => {

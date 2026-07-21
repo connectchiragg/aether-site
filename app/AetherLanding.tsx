@@ -74,6 +74,7 @@ export function AetherLanding() {
             <div className="hero-actions">
               <button className="primary-button" onClick={showTour}><span>↓</span> View product tour</button>
               <a className="secondary-button" href="#install"><span>$</span> Install with Homebrew</a>
+              <a className="secondary-button" href="https://github.com/connectchiragg/aether" target="_blank" rel="noreferrer"><span>★</span> Star on GitHub</a>
             </div>
             <div className="hero-proof" aria-label="Aether privacy summary">
               <span><b>01</b> No SDK</span>
@@ -214,7 +215,7 @@ export function AetherLanding() {
         <p className="eyebrow"><span>06</span><i /> Open source</p>
         <div className="open-source-grid">
           <h2>Understand what your<br /><em>agents actually did.</em></h2>
-          <div><p>Issues and pull requests are welcome—especially new providers, telemetry fields, pricing updates, and parser fixtures.</p><a className="primary-button" href="https://github.com/connectchiragg/aether" target="_blank" rel="noreferrer">Explore on GitHub <span>↗</span></a></div>
+          <div><p>Issues and pull requests are welcome—especially new providers, telemetry fields, pricing updates, and parser fixtures.</p><a className="primary-button" href="https://github.com/connectchiragg/aether" target="_blank" rel="noreferrer">Star Aether on GitHub <span>↗</span></a></div>
         </div>
       </section>
 

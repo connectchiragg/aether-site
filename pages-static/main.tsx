@@ -1,9 +1,9 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import { AetherLanding } from "../app/AetherLanding";
 import "../app/globals.css";
 
-createRoot(document.getElementById("root")!).render(
+hydrateRoot(document.getElementById("root")!,
   <React.StrictMode>
     <AetherLanding />
   </React.StrictMode>,

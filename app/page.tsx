@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { AetherLanding } from "./AetherLanding";
 
 export const metadata: Metadata = {
-  title: "Aether — See the invisible",
+  title: { absolute: "Aether: Claude Code & Codex Observability TUI" },
   description:
-    "Local, live observability for Claude Code and Codex. Understand context, cost, complexity, code changes, tools, compactions, and sub-agents without leaving your terminal.",
+    "Open-source, local observability for Claude Code and Codex. Track context, tokens, cost, latency, agents, compactions, tools, and code changes.",
   alternates: { canonical: "/" },
 };
 

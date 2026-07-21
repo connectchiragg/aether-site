@@ -1,0 +1,25 @@
+# Aether
+
+> Aether is an open-source, local observability TUI for Claude Code and Codex.
+
+Aether reads the native session files already created by supported coding agents and turns them into a live terminal dashboard. It does not require an SDK, provider API key, hook installation, additional model call, or hosted telemetry service.
+
+## Product
+
+- Website: https://aether.haciensus.com
+- Source: https://github.com/connectchiragg/aether
+- Releases: https://github.com/connectchiragg/aether/releases/latest
+- License: MIT
+- Platforms: macOS and Linux
+
+## Capabilities
+
+- Synchronized context, duration, estimated cost, token, turn complexity, and code-diff graphs
+- Per-request input attribution across context, tools, MCPs, agents, hooks, memory, documents, compactions, and provider runtime
+- Claude Code and Codex session discovery without configuration
+- Project-grouped session titles and nested agent traces
+- Local-only processing of provider-native JSONL files
+
+## Install
+
+Homebrew users install `connectchiragg/tap/aether`, then run `aether watch`.
