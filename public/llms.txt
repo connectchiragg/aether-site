@@ -2,6 +2,12 @@
 
 > Aether is an open-source, local observability TUI for Claude Code and Codex.
 
+## Guides
+
+- [Claude Code observability](https://aether.haciensus.com/claude-code-observability/)
+- [Codex observability](https://aether.haciensus.com/codex-observability/)
+- [AI agent context monitoring](https://aether.haciensus.com/ai-agent-context-monitoring/)
+
 Aether reads the native session files already created by supported coding agents and turns them into a live terminal dashboard. It does not require an SDK, provider API key, hook installation, additional model call, or hosted telemetry service.
 
 ## Product

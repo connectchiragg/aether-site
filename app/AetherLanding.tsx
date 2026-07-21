@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { EyeCanvas } from "./EyeCanvas";
+import { intentPages } from "./IntentPage";
 
 const installCommands = [
   "brew trust --formula connectchiragg/tap/aether",
@@ -56,6 +57,7 @@ export function AetherLanding() {
         </a>
         <nav aria-label="Primary navigation">
           <a href="#signals">Signals</a>
+          <a href="#guides">Guides</a>
           <a href="#privacy">Privacy</a>
           <a href="#install">Install</a>
           <a className="nav-github" href="https://github.com/connectchiragg/aether" target="_blank" rel="noreferrer">GitHub ↗</a>
@@ -139,6 +141,26 @@ export function AetherLanding() {
           <img src="/screenshots/metrics.png" alt="Aether synchronized metrics dashboard" loading="lazy" />
           <figcaption><span>FIG. 01</span> Six synchronized graph panels keep every signal on the same turn range.</figcaption>
         </figure>
+      </section>
+
+      <section id="guides" className="guides-section section-shell section-rule">
+        <div className="section-heading section-heading--split">
+          <div>
+            <p className="eyebrow"><span>GUIDES</span><i /> Field notes</p>
+            <h2>Start with the question<br /><em>you need answered.</em></h2>
+          </div>
+          <p>Short, provider-specific guides to observing coding-agent work without adding instrumentation.</p>
+        </div>
+        <div className="guide-link-grid">
+          {intentPages.map((page, index) => (
+            <a href={`/${page.slug}/`} key={page.slug}>
+              <span>{String(index + 1).padStart(2, "0")} / {page.eyebrow}</span>
+              <h3>{page.heading}</h3>
+              <p>{page.description}</p>
+              <i>Read field guide →</i>
+            </a>
+          ))}
+        </div>
       </section>
 
       <section id="how-it-works" className="how-section section-shell section-rule">
