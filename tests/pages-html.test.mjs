@@ -7,6 +7,7 @@ test("static Pages build includes search metadata and prerendered product copy",
   assert.match(html, /Aether: Claude Code &amp; Codex Observability TUI/);
   assert.match(html, /aether\.haciensus\.com/);
   assert.match(html, /application\/ld\+json/);
+  assert.match(html, /name="google-site-verification"/);
   assert.match(html, /"@type": "SoftwareApplication"/);
   assert.match(html, /id="root">[\s\S]*?<main>/);
   assert.match(html, /View product tour/);
